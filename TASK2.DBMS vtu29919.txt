@@ -1,0 +1,893 @@
+create table persons(personid varchar2(25) PRIMARY KEY, name varchar(50), dob DATE);
+
+Table created.
+
+SQL> create table students(studentid varchar2(25) PRIMARY KEY, personid int, degree varchar(10) CHECK (degree IN('BE','ME','PHD')), batch DATE,FOREIGN KEY (personid) REFERENCES universitypersons(personid));
+
+Table created.
+
+SQL>  create table faculty(facultyid varchar2(25) PRIMARY KEY, personid int, deptid int, position varchar(20), FOREIGN KEY (personid) REFERENCES universitypersons(personid));
+ create table faculty(facultyid varchar2(25) PRIMARY KEY, personid int, deptid int, position varchar(20), FOREIGN KEY (personid) REFERENCES universitypersons(personid))
+              *
+ERROR at line 1:
+ORA-00955: name is already used by an existing object
+
+
+SQL>  create table faculty1(facultyid varchar2(25) PRIMARY KEY, personid int, deptid int, position varchar(20), FOREIGN KEY (personid) REFERENCES universitypersons(personid));
+
+Table created.
+
+SQL>  create table course(courseid varchar2(25) PRIMARY KEY, coursename varchar(25), credits int CHECK (credits BETWEEN 1 and 4), deptid int, FOREIGN KEY (deptid) REFERENCES dept(deptid));
+ create table course(courseid varchar2(25) PRIMARY KEY, coursename varchar(25), credits int CHECK (credits BETWEEN 1 and 4), deptid int, FOREIGN KEY (deptid) REFERENCES dept(deptid))
+                                                                                                                                                                         *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL>  create table course(courseid varchar2(25) PRIMARY KEY, coursename varchar(25), credits int CHECK (credits BETWEEN 1 and 4), deptid varchar2(25), FOREIGN KEY (deptid) REFERENCES dept(deptid));
+ create table course(courseid varchar2(25) PRIMARY KEY, coursename varchar(25), credits int CHECK (credits BETWEEN 1 and 4), deptid varchar2(25), FOREIGN KEY (deptid) REFERENCES dept(deptid))
+                                                                                                                                                                                  *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL>  create table univcourse(courseid varchar2(25) PRIMARY KEY, coursename varchar(25), credits int CHECK (credits BETWEEN 1 and 4), deptid varchar2(25), FOREIGN KEY (deptid) REFERENCES dept(deptid));
+ create table univcourse(courseid varchar2(25) PRIMARY KEY, coursename varchar(25), credits int CHECK (credits BETWEEN 1 and 4), deptid varchar2(25), FOREIGN KEY (deptid) REFERENCES dept(deptid))
+                                                                                                                                                                                      *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> create table dept(deptid varchar2(25) PRIMARY KEY,deptname varchar2(50));
+
+Table created.
+
+SQL>  create table univcourse(courseid varchar2(25) PRIMARY KEY, coursename varchar(25), credits int CHECK (credits BETWEEN 1 and 4), deptid varchar2(25), FOREIGN KEY (deptid) REFERENCES dept(deptid));
+
+Table created.
+
+SQL> desc persons;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ PERSONID                                  NOT NULL VARCHAR2(25)
+ NAME                                               VARCHAR2(50)
+ DOB                                                DATE
+
+SQL> desc dept;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ DEPTID                                    NOT NULL VARCHAR2(25)
+ DEPTNAME                                           VARCHAR2(50)
+
+SQL> desc students;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ STUDENTID                                 NOT NULL VARCHAR2(25)
+ PERSONID                                           NUMBER(38)
+ DEGREE                                             VARCHAR2(10)
+ BATCH                                              DATE
+
+SQL> desc faculty1;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ FACULTYID                                 NOT NULL VARCHAR2(25)
+ PERSONID                                           NUMBER(38)
+ DEPTID                                             NUMBER(38)
+ POSITION                                           VARCHAR2(20)
+
+SQL> desc univcourse;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ COURSEID                                  NOT NULL VARCHAR2(25)
+ COURSENAME                                         VARCHAR2(25)
+ CREDITS                                            NUMBER(38)
+ DEPTID                                             VARCHAR2(25)
+
+SQL> create table persons(personid varchar2(25) PRIMARY KEY, name varchar(50), dob DATE);
+create table persons(personid varchar2(25) PRIMARY KEY, name varchar(50), dob DATE)
+             *
+ERROR at line 1:
+ORA-00955: name is already used by an existing object
+
+
+SQL> create table persons1(personid varchar2(25) PRIMARY KEY, name varchar(50), dob DATE);
+
+Table created.
+
+SQL> create table dept2(deptid varchar2(25) PRIMARY KEY, deptname varchar(20));
+
+Table created.
+
+SQL> create table student3(studentid varchar2(25) PRIMARY KEY, personid varchar2(25), degree varchar(10) CHECK (degree IN('BE','ME','PHD')), batch DATE,FOREIGN KEY (personid) REFERENCES person(personid));
+create table student3(studentid varchar2(25) PRIMARY KEY, personid varchar2(25), degree varchar(10) CHECK (degree IN('BE','ME','PHD')), batch DATE,FOREIGN KEY (personid) REFERENCES person(personid))
+                                                                                                                                                                                     *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> create table students3(studentid varchar2(25) PRIMARY KEY, personid varchar2(25), degree varchar(10) CHECK (degree IN('BE','ME','PHD')), batch DATE,FOREIGN KEY (personid) REFERENCES person(personid));
+create table students3(studentid varchar2(25) PRIMARY KEY, personid varchar2(25), degree varchar(10) CHECK (degree IN('BE','ME','PHD')), batch DATE,FOREIGN KEY (personid) REFERENCES person(personid))
+                                                                                                                                                                                      *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> create table students3(studentid varchar2(25) PRIMARY KEY, personid varchar2(25), degree varchar(10) CHECK (degree IN('BE','ME','PHD')), batch DATE,FOREIGN KEY (personid) REFERENCES person(personid));
+create table students3(studentid varchar2(25) PRIMARY KEY, personid varchar2(25), degree varchar(10) CHECK (degree IN('BE','ME','PHD')), batch DATE,FOREIGN KEY (personid) REFERENCES person(personid))
+                                                                                                                                                                                      *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> insert into persons values ('&personid','&name',TO_DATE('&dob','DD-MM-YYYY'))
+  2  insert into persons values ('&personid','&name',TO_DATE('&dob','DD-MM-YYYY'));
+Enter value for personid: P1
+Enter value for name: ajay
+Enter value for dob: 12-07-2005
+old   1: insert into persons values ('&personid','&name',TO_DATE('&dob','DD-MM-YYYY'))
+new   1: insert into persons values ('P1','ajay',TO_DATE('12-07-2005','DD-MM-YYYY'))
+Enter value for personid: p2
+Enter value for name: ram
+Enter value for dob: 16-04-2005
+old   2: insert into persons values ('&personid','&name',TO_DATE('&dob','DD-MM-YYYY'))
+new   2: insert into persons values ('p2','ram',TO_DATE('16-04-2005','DD-MM-YYYY'))
+insert into persons values ('p2','ram',TO_DATE('16-04-2005','DD-MM-YYYY'))
+*
+ERROR at line 2:
+ORA-00933: SQL command not properly ended
+
+
+SQL> insert into persons values ('&personid','&name',TO_DATE('&dob','DD-MM-YYYY'));
+Enter value for personid: P2
+Enter value for name: ram
+Enter value for dob: 16-04-2005
+old   1: insert into persons values ('&personid','&name',TO_DATE('&dob','DD-MM-YYYY'))
+new   1: insert into persons values ('P2','ram',TO_DATE('16-04-2005','DD-MM-YYYY'))
+
+1 row created.
+
+SQL> insert into persons values ('&personid','&name',TO_DATE('&dob','DD-MM-YYYY'));
+Enter value for personid: P3
+Enter value for name: seetha
+Enter value for dob: 12-08-2005
+old   1: insert into persons values ('&personid','&name',TO_DATE('&dob','DD-MM-YYYY'))
+new   1: insert into persons values ('P3','seetha',TO_DATE('12-08-2005','DD-MM-YYYY'))
+
+1 row created.
+
+SQL> insert into persons values ('&personid','&name',TO_DATE('&dob','DD-MM-YYYY'));
+Enter value for personid: P4
+Enter value for name: kumaran
+Enter value for dob: 21-06-2006
+old   1: insert into persons values ('&personid','&name',TO_DATE('&dob','DD-MM-YYYY'))
+new   1: insert into persons values ('P4','kumaran',TO_DATE('21-06-2006','DD-MM-YYYY'))
+
+1 row created.
+
+SQL> insert into persons values ('&personid','&name',TO_DATE('&dob','DD-MM-YYYY'));
+Enter value for personid: P5
+Enter value for name: rajiv
+Enter value for dob: 29-10-2007
+old   1: insert into persons values ('&personid','&name',TO_DATE('&dob','DD-MM-YYYY'))
+new   1: insert into persons values ('P5','rajiv',TO_DATE('29-10-2007','DD-MM-YYYY'))
+
+1 row created.
+
+SQL> insert into persons values ('&personid','&name',TO_DATE('&dob','DD-MM-YYYY'));
+Enter value for personid: P6
+Enter value for name: mano
+Enter value for dob: 27-02-2006
+old   1: insert into persons values ('&personid','&name',TO_DATE('&dob','DD-MM-YYYY'))
+new   1: insert into persons values ('P6','mano',TO_DATE('27-02-2006','DD-MM-YYYY'))
+
+1 row created.
+
+SQL> select * frpm
+  2
+SQL> select * from persons
+  2  select * from persons;
+select * from persons
+*
+ERROR at line 2:
+ORA-00933: SQL command not properly ended
+
+
+SQL> select * from persons;
+
+PERSONID                  NAME
+------------------------- --------------------------------------------------
+DOB
+---------
+P2                        ram
+16-APR-05
+
+P3                        seetha
+12-AUG-05
+
+P4                        kumaran
+21-JUN-06
+
+
+PERSONID                  NAME
+------------------------- --------------------------------------------------
+DOB
+---------
+P5                        rajiv
+29-OCT-07
+
+P6                        mano
+27-FEB-06
+
+
+SQL> alter table students modify batch number;
+
+Table altered.
+
+SQL> desc students;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ STUDENTID                                 NOT NULL VARCHAR2(25)
+ PERSONID                                           NUMBER(38)
+ DEGREE                                             VARCHAR2(10)
+ BATCH                                              NUMBER
+
+SQL>  alter table students add (gender char(1) CHECK (gender IN ('M','F')), email varchar(50));
+
+Table altered.
+
+SQL> desc students
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ STUDENTID                                 NOT NULL VARCHAR2(25)
+ PERSONID                                           NUMBER(38)
+ DEGREE                                             VARCHAR2(10)
+ BATCH                                              NUMBER
+ GENDER                                             CHAR(1)
+ EMAIL                                              VARCHAR2(50)
+
+SQL> insert into dept values ('&deptid','&deptname');
+Enter value for deptid: cs101
+Enter value for deptname: COMPUTER SCIENCE
+old   1: insert into dept values ('&deptid','&deptname')
+new   1: insert into dept values ('cs101','COMPUTER SCIENCE')
+
+1 row created.
+
+SQL> insert into dept values ('&deptid','&deptname');
+Enter value for deptid: cs102
+Enter value for deptname: CS-AI
+old   1: insert into dept values ('&deptid','&deptname')
+new   1: insert into dept values ('cs102','CS-AI')
+
+1 row created.
+
+SQL> insert into dept values ('&deptid','&deptname');
+Enter value for deptid: me103
+Enter value for deptname: MEACHANICAL
+old   1: insert into dept values ('&deptid','&deptname')
+new   1: insert into dept values ('me103','MEACHANICAL')
+
+1 row created.
+
+SQL> insert into dept values ('&deptid','&deptname');
+Enter value for deptid: EC104
+Enter value for deptname: ELECTRONICS
+old   1: insert into dept values ('&deptid','&deptname')
+new   1: insert into dept values ('EC104','ELECTRONICS')
+
+1 row created.
+
+SQL> insert into dept values ('&deptid','&deptname');
+Enter value for deptid: IT105
+Enter value for deptname: CS-IT
+old   1: insert into dept values ('&deptid','&deptname')
+new   1: insert into dept values ('IT105','CS-IT')
+
+1 row created.
+
+SQL> insert into dept values ('&deptid','&deptname');
+Enter value for deptid: EE106
+Enter value for deptname: ELECTRICALS
+old   1: insert into dept values ('&deptid','&deptname')
+new   1: insert into dept values ('EE106','ELECTRICALS')
+
+1 row created.
+
+SQL> select * from dept;
+
+DEPTID                    DEPTNAME
+------------------------- --------------------------------------------------
+cs101                     COMPUTER SCIENCE
+cs102                     CS-AI
+me103                     MEACHANICAL
+EC104                     ELECTRONICS
+IT105                     CS-IT
+EE106                     ELECTRICALS
+
+6 rows selected.
+
+SQL> select deptid uppercase(deptid) from dept;
+select deptid uppercase(deptid) from dept
+                       *
+ERROR at line 1:
+ORA-00923: FROM keyword not found where expected
+
+
+SQL> select DEPTID uppercase(DEPTID) from dept;
+select DEPTID uppercase(DEPTID) from dept
+                       *
+ERROR at line 1:
+ORA-00923: FROM keyword not found where expected
+
+
+SQL>  insert into students values ('&studentid','&personid','&degree',&batch,'&gender','&email');
+Enter value for studentid: S1
+Enter value for personid: P1
+Enter value for degree: BE
+Enter value for batch: 2024
+Enter value for gender: M
+Enter value for email: ajay@gmail.com
+old   1:  insert into students values ('&studentid','&personid','&degree',&batch,'&gender','&email')
+new   1:  insert into students values ('S1','P1','BE',2024,'M','ajay@gmail.com')
+ insert into students values ('S1','P1','BE',2024,'M','ajay@gmail.com')
+                                   *
+ERROR at line 1:
+ORA-01722: invalid number
+
+
+SQL>  insert into students values ('&studentid','&personid','&degree',&batch,'&gender','&email');
+Enter value for studentid: s1
+Enter value for personid: P1
+Enter value for degree: BE
+Enter value for batch: 2024
+Enter value for gender: M
+Enter value for email: ajay@gmail.com
+old   1:  insert into students values ('&studentid','&personid','&degree',&batch,'&gender','&email')
+new   1:  insert into students values ('s1','P1','BE',2024,'M','ajay@gmail.com')
+ insert into students values ('s1','P1','BE',2024,'M','ajay@gmail.com')
+                                   *
+ERROR at line 1:
+ORA-01722: invalid number
+
+
+SQL> insert into person values ('&personid', '&name',TO_DATE('&dob','DD-MM-YYYY'));
+Enter value for personid: P1
+Enter value for name: ajay
+Enter value for dob: 12-07-2005
+old   1: insert into person values ('&personid', '&name',TO_DATE('&dob','DD-MM-YYYY'))
+new   1: insert into person values ('P1', 'ajay',TO_DATE('12-07-2005','DD-MM-YYYY'))
+insert into person values ('P1', 'ajay',TO_DATE('12-07-2005','DD-MM-YYYY'))
+            *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> insert into persons values ('&personid', '&name',TO_DATE('&dob','DD-MM-YYYY'));
+Enter value for personid: P1
+Enter value for name: ajay
+Enter value for dob: 12-07-2005
+old   1: insert into persons values ('&personid', '&name',TO_DATE('&dob','DD-MM-YYYY'))
+new   1: insert into persons values ('P1', 'ajay',TO_DATE('12-07-2005','DD-MM-YYYY'))
+
+1 row created.
+
+SQL> select * from persons;
+
+PERSONID                  NAME
+------------------------- --------------------------------------------------
+DOB
+---------
+P2                        ram
+16-APR-05
+
+P3                        seetha
+12-AUG-05
+
+P4                        kumaran
+21-JUN-06
+
+
+PERSONID                  NAME
+------------------------- --------------------------------------------------
+DOB
+---------
+P5                        rajiv
+29-OCT-07
+
+P6                        mano
+27-FEB-06
+
+P1                        ajay
+12-JUL-05
+
+
+6 rows selected.
+
+SQL> insert into students values ('&studentid','&personid','&degree',&batch,'&gender','&email');
+Enter value for studentid: s1
+Enter value for personid: P1
+Enter value for degree: BE
+Enter value for batch: 2024
+Enter value for gender: M
+Enter value for email: ajay@gmail.com
+old   1: insert into students values ('&studentid','&personid','&degree',&batch,'&gender','&email')
+new   1: insert into students values ('s1','P1','BE',2024,'M','ajay@gmail.com')
+insert into students values ('s1','P1','BE',2024,'M','ajay@gmail.com')
+                                  *
+ERROR at line 1:
+ORA-01722: invalid number
+
+
+SQL> /
+Enter value for studentid: s1
+Enter value for personid: P1
+Enter value for degree: BE
+Enter value for batch: 2024
+Enter value for gender: M
+Enter value for email: ajay@gmail.com
+old   1: insert into students values ('&studentid','&personid','&degree',&batch,'&gender','&email')
+new   1: insert into students values ('s1','P1','BE',2024,'M','ajay@gmail.com')
+insert into students values ('s1','P1','BE',2024,'M','ajay@gmail.com')
+                                  *
+ERROR at line 1:
+ORA-01722: invalid number
+
+
+SQL> desc students;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ STUDENTID                                 NOT NULL VARCHAR2(25)
+ PERSONID                                           NUMBER(38)
+ DEGREE                                             VARCHAR2(10)
+ BATCH                                              NUMBER
+ GENDER                                             CHAR(1)
+ EMAIL                                              VARCHAR2(50)
+
+SQL>
+SQL> desc persons;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ PERSONID                                  NOT NULL VARCHAR2(25)
+ NAME                                               VARCHAR2(50)
+ DOB                                                DATE
+
+SQL> alter table students modify personid varchar2(25)
+  2  alter table students modify personid varchar2(25);
+alter table students modify personid varchar2(25)
+*
+ERROR at line 2:
+ORA-01735: invalid ALTER TABLE option
+
+
+SQL> alter table students modify personid varchar2(25);
+alter table students modify personid varchar2(25)
+                            *
+ERROR at line 1:
+ORA-02267: column type incompatible with referenced column type
+
+
+SQL> create table student1(studentid varchar2(25) PRIMARY KEY, personid varchar2(25), degree varchar(10) CHECK (degree IN('BE','ME','PHD')), batch DATE,FOREIGN KEY (personid) REFERENCES person(personid));
+create table student1(studentid varchar2(25) PRIMARY KEY, personid varchar2(25), degree varchar(10) CHECK (degree IN('BE','ME','PHD')), batch DATE,FOREIGN KEY (personid) REFERENCES person(personid))
+                                                                                                                                                                                     *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> alter table students personid varchar2(25);
+alter table students personid varchar2(25)
+                     *
+ERROR at line 1:
+ORA-01735: invalid ALTER TABLE option
+
+
+SQL> create table student1(studentid varchar2(25) PRIMARY KEY, personid varchar2(25), degree varchar(10) CHECK (degree IN('BE','ME','PHD')), batch DATE,FOREIGN KEY (personid) REFERENCES persons(personid));
+
+Table created.
+
+SQL> desc student1;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ STUDENTID                                 NOT NULL VARCHAR2(25)
+ PERSONID                                           VARCHAR2(25)
+ DEGREE                                             VARCHAR2(10)
+ BATCH                                              DATE
+
+SQL> insert into student1 values ('&studentid','&personid','&degree',&batch,'&gender','&email');
+Enter value for studentid: s1
+Enter value for personid: P1
+Enter value for degree: BE
+Enter value for batch: 2024
+Enter value for gender: M
+Enter value for email: ajay@gmail.com
+old   1: insert into student1 values ('&studentid','&personid','&degree',&batch,'&gender','&email')
+new   1: insert into student1 values ('s1','P1','BE',2024,'M','ajay@gmail.com')
+insert into student1 values ('s1','P1','BE',2024,'M','ajay@gmail.com')
+            *
+ERROR at line 1:
+ORA-00913: too many values
+
+
+SQL> insert into student1 values ('&studentid','&personid','&degree',&batch,'&gender','&email');
+Enter value for studentid: s2
+Enter value for personid: P2
+Enter value for degree: BE
+Enter value for batch: 2024
+Enter value for gender:
+Enter value for email:
+old   1: insert into student1 values ('&studentid','&personid','&degree',&batch,'&gender','&email')
+new   1: insert into student1 values ('s2','P2','BE',2024,'','')
+insert into student1 values ('s2','P2','BE',2024,'','')
+            *
+ERROR at line 1:
+ORA-00913: too many values
+
+
+SQL> alter table student1 modify batch number;
+
+Table altered.
+
+SQL> alter table student1 add (gender char(1) CHECK (gender IN ('M','F')), email varchar(50));
+
+Table altered.
+
+SQL> insert into student1 values ('&studentid','&personid','&degree',&batch,'&gender','&email');
+Enter value for studentid: s1
+Enter value for personid: P1
+Enter value for degree: BE
+Enter value for batch: 2024
+Enter value for gender: M
+Enter value for email: ajay@gmail.com
+old   1: insert into student1 values ('&studentid','&personid','&degree',&batch,'&gender','&email')
+new   1: insert into student1 values ('s1','P1','BE',2024,'M','ajay@gmail.com')
+
+1 row created.
+
+SQL> insert into student1 values ('&studentid','&personid','&degree',&batch,'&gender','&email');
+Enter value for studentid: s2
+Enter value for personid: P2
+Enter value for degree: BE
+Enter value for batch: 2024
+Enter value for gender: M
+Enter value for email: ram@gmail.com
+old   1: insert into student1 values ('&studentid','&personid','&degree',&batch,'&gender','&email')
+new   1: insert into student1 values ('s2','P2','BE',2024,'M','ram@gmail.com')
+
+1 row created.
+
+SQL> insert into student1 values ('&studentid','&personid','&degree',&batch,'&gender','&email');
+Enter value for studentid: s3
+Enter value for personid: P3
+Enter value for degree: ME
+Enter value for batch: 2024
+Enter value for gender: F
+Enter value for email: seetha@gmail.com
+old   1: insert into student1 values ('&studentid','&personid','&degree',&batch,'&gender','&email')
+new   1: insert into student1 values ('s3','P3','ME',2024,'F','seetha@gmail.com')
+
+1 row created.
+
+SQL> select * from student1
+  2  select * from student1;
+select * from student1
+*
+ERROR at line 2:
+ORA-00933: SQL command not properly ended
+
+
+SQL> select * from student1;
+
+STUDENTID                 PERSONID                  DEGREE          BATCH G
+------------------------- ------------------------- ---------- ---------- -
+EMAIL
+--------------------------------------------------
+s1                        P1                        BE               2024 M
+ajay@gmail.com
+
+s2                        P2                        BE               2024 M
+ram@gmail.com
+
+s3                        P3                        ME               2024 F
+seetha@gmail.com
+
+
+SQL> insert into faculty1 values('&facultyid', '&personid', '&deptid','&position');
+Enter value for facultyid: F1
+Enter value for personid: P4
+Enter value for deptid: cs101
+Enter value for position: assistant professor
+old   1: insert into faculty1 values('&facultyid', '&personid', '&deptid','&position')
+new   1: insert into faculty1 values('F1', 'P4', 'cs101','assistant professor')
+insert into faculty1 values('F1', 'P4', 'cs101','assistant professor')
+                                  *
+ERROR at line 1:
+ORA-01722: invalid number
+
+
+SQL> create table faculty2(facultyid varchar2(25) PRIMARY KEY, personid varchar2(25), deptid varchar2(25), position varchar(20), FOREIGN KEY (personid) REFERENCES persons(personid));
+
+Table created.
+
+SQL> desc faculty2;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ FACULTYID                                 NOT NULL VARCHAR2(25)
+ PERSONID                                           VARCHAR2(25)
+ DEPTID                                             VARCHAR2(25)
+ POSITION                                           VARCHAR2(20)
+
+SQL> insert into faculty2 values('&facultyid', '&personid', '&deptid','&position');
+Enter value for facultyid: f1
+Enter value for personid: P1
+Enter value for deptid: cs101
+Enter value for position: assistant professor
+old   1: insert into faculty2 values('&facultyid', '&personid', '&deptid','&position')
+new   1: insert into faculty2 values('f1', 'P1', 'cs101','assistant professor')
+
+1 row created.
+
+SQL> insert into faculty2 values('&facultyid', '&personid', '&deptid','&position');
+Enter value for facultyid: f2
+Enter value for personid: P4
+Enter value for deptid: me103
+Enter value for position: assistant professor
+old   1: insert into faculty2 values('&facultyid', '&personid', '&deptid','&position')
+new   1: insert into faculty2 values('f2', 'P4', 'me103','assistant professor')
+
+1 row created.
+
+SQL> insert into faculty2 values('&facultyid', '&personid', '&deptid','&position');
+Enter value for facultyid: f3
+Enter value for personid: P3
+Enter value for deptid: EE106
+Enter value for position: assistant professor
+old   1: insert into faculty2 values('&facultyid', '&personid', '&deptid','&position')
+new   1: insert into faculty2 values('f3', 'P3', 'EE106','assistant professor')
+
+1 row created.
+
+SQL> select * from faculty2
+  2  select * from faculty2
+  3  select * from faculty2;
+select * from faculty2
+*
+ERROR at line 2:
+ORA-00933: SQL command not properly ended
+
+
+SQL> select * from faculty2;
+
+FACULTYID                 PERSONID                  DEPTID
+------------------------- ------------------------- -------------------------
+POSITION
+--------------------
+f1                        P1                        cs101
+assistant professor
+
+f2                        P4                        me103
+assistant professor
+
+f3                        P3                        EE106
+assistant professor
+
+
+SQL> insert into univcourse values ('&courseid','&coursename',&credits,'&deptid');
+Enter value for courseid: 1021cs207
+Enter value for coursename: DBMS
+Enter value for credits: 4
+Enter value for deptid: cs101
+old   1: insert into univcourse values ('&courseid','&coursename',&credits,'&deptid')
+new   1: insert into univcourse values ('1021cs207','DBMS',4,'cs101')
+
+1 row created.
+
+SQL> insert into univcourse values ('&courseid','&coursename',&credits,'&deptid');
+Enter value for courseid: 1021cs306
+Enter value for coursename: CODING-1
+Enter value for credits: 2
+Enter value for deptid: cs101
+old   1: insert into univcourse values ('&courseid','&coursename',&credits,'&deptid')
+new   1: insert into univcourse values ('1021cs306','CODING-1',2,'cs101')
+
+1 row created.
+
+SQL> insert into univcourse values ('&courseid','&coursename',&credits,'&deptid');
+Enter value for courseid: 1021ec204
+Enter value for coursename: DEGITAL ELECTRONICS
+Enter value for credits: 3
+Enter value for deptid: EC104
+old   1: insert into univcourse values ('&courseid','&coursename',&credits,'&deptid')
+new   1: insert into univcourse values ('1021ec204','DEGITAL ELECTRONICS',3,'EC104')
+
+1 row created.
+
+SQL> insert into univcourse values ('&courseid','&coursename',&credits,'&deptid');
+Enter value for courseid: 1021me103
+Enter value for coursename: ENGINEERING DRAWING
+Enter value for credits: 2
+Enter value for deptid: me103
+old   1: insert into univcourse values ('&courseid','&coursename',&credits,'&deptid')
+new   1: insert into univcourse values ('1021me103','ENGINEERING DRAWING',2,'me103')
+
+1 row created.
+
+SQL> insert into univcourse values ('&courseid','&coursename',&credits,'&deptid');
+Enter value for courseid: 1021cs206
+Enter value for coursename: DATA STRUCTURES
+Enter value for credits: 4
+Enter value for deptid: cs101
+old   1: insert into univcourse values ('&courseid','&coursename',&credits,'&deptid')
+new   1: insert into univcourse values ('1021cs206','DATA STRUCTURES',4,'cs101')
+
+1 row created.
+
+SQL> select * from univcourse;
+
+COURSEID                  COURSENAME                   CREDITS
+------------------------- ------------------------- ----------
+DEPTID
+-------------------------
+1021cs207                 DBMS                               4
+cs101
+
+1021cs306                 CODING-1                           2
+cs101
+
+1021ec204                 DEGITAL ELECTRONICS                3
+EC104
+
+
+COURSEID                  COURSENAME                   CREDITS
+------------------------- ------------------------- ----------
+DEPTID
+-------------------------
+1021me103                 ENGINEERING DRAWING                2
+me103
+
+1021cs206                 DATA STRUCTURES                    4
+cs101
+
+
+SQL> alter table student1 ADD CONSTRAINT uemail UNIQUE(email);
+
+Table altered.
+
+SQL> alter table persons MODIFY name varchar2(25) NOT NULL;
+
+Table altered.
+
+SQL> insert into persons values ('&personid', '&name',TO_DATE('&dob','DD-MM-YYYY'));
+Enter value for personid: P7
+Enter value for name: dinesh
+Enter value for dob: 14-12-1994
+old   1: insert into persons values ('&personid', '&name',TO_DATE('&dob','DD-MM-YYYY'))
+new   1: insert into persons values ('P7', 'dinesh',TO_DATE('14-12-1994','DD-MM-YYYY'))
+
+1 row created.
+
+SQL> insert into persons values ('&personid', '&name',TO_DATE('&dob','DD-MM-YYYY'));
+Enter value for personid: P8
+Enter value for name: ajay
+Enter value for dob: 11-04-2005
+old   1: insert into persons values ('&personid', '&name',TO_DATE('&dob','DD-MM-YYYY'))
+new   1: insert into persons values ('P8', 'ajay',TO_DATE('11-04-2005','DD-MM-YYYY'))
+
+1 row created.
+
+SQL> select * from persons;
+
+PERSONID                  NAME                      DOB
+------------------------- ------------------------- ---------
+P2                        ram                       16-APR-05
+P3                        seetha                    12-AUG-05
+P4                        kumaran                   21-JUN-06
+P5                        rajiv                     29-OCT-07
+P6                        mano                      27-FEB-06
+P1                        ajay                      12-JUL-05
+P7                        dinesh                    14-DEC-94
+P8                        ajay                      11-APR-05
+
+8 rows selected.
+
+SQL> delete from persons where personid= 'p8';
+
+0 rows deleted.
+
+SQL> delete from persons where personid= 'P8';
+
+1 row deleted.
+
+SQL> select * from persons;
+
+PERSONID                  NAME                      DOB
+------------------------- ------------------------- ---------
+P2                        ram                       16-APR-05
+P3                        seetha                    12-AUG-05
+P4                        kumaran                   21-JUN-06
+P5                        rajiv                     29-OCT-07
+P6                        mano                      27-FEB-06
+P1                        ajay                      12-JUL-05
+P7                        dinesh                    14-DEC-94
+
+7 rows selected.
+
+SQL> insert into faculty2 values('F4','p7','CS101','professor');
+insert into faculty2 values('F4','p7','CS101','professor')
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (SYSTEM.SYS_C007034) violated - parent key not
+found
+
+
+SQL> insert into faculty2 values('f4','P7','cs101','professor');
+
+1 row created.
+
+SQL> select * from faculty2;
+
+FACULTYID                 PERSONID                  DEPTID
+------------------------- ------------------------- -------------------------
+POSITION
+--------------------
+f1                        P1                        cs101
+assistant professor
+
+f2                        P4                        me103
+assistant professor
+
+f3                        P3                        EE106
+assistant professor
+
+
+FACULTYID                 PERSONID                  DEPTID
+------------------------- ------------------------- -------------------------
+POSITION
+--------------------
+f4                        P7                        cs101
+professor
+
+
+SQL> alter table faculty2 ADD (salary number(6),city varchar2(25));
+
+Table altered.
+
+SQL> update faculty2 set salary = 110000,city = 'madurai' where facultyid='f1';
+
+1 row updated.
+
+SQL> update faculty2 set salary = 100000,city = 'chennai' where facultyid='f2';
+
+1 row updated.
+
+SQL> update faculty2 set salary = 120000,city = 'tirupati' where facultyid='f3';
+
+1 row updated.
+
+SQL> update faculty2 set salary = 150000,city = 'nellore' where facultyid='f4';
+
+1 row updated.
+
+SQL> select * from faculty2;
+
+FACULTYID                 PERSONID                  DEPTID
+------------------------- ------------------------- -------------------------
+POSITION                 SALARY CITY
+-------------------- ---------- -------------------------
+f1                        P1                        cs101
+assistant professor      110000 madurai
+
+f2                        P4                        me103
+assistant professor      100000 chennai
+
+f3                        P3                        EE106
+assistant professor      120000 tirupati
+
+
+FACULTYID                 PERSONID                  DEPTID
+------------------------- ------------------------- -------------------------
+POSITION                 SALARY CITY
+-------------------- ---------- -------------------------
+f4                        P7                        cs101
+professor                150000 nellore
+
+
+SQL>
