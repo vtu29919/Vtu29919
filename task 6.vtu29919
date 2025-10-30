@@ -1,0 +1,159 @@
+select * from player;
+
+PLAYERID   FNAME
+---------- --------------------------------------------------
+LNAME                                                     AGE DOB
+-------------------------------------------------- ---------- ---------
+PLAYINGROLE                                        TEAMID
+-------------------------------------------------- ----------
+BATTING              BOWLING              MATCH_PLAYED MATCHID
+-------------------- -------------------- ------------ ----------
+P101       raj
+N                                                          20 16-JUN-05
+bowling                                            T1
+
+
+
+PLAYERID   FNAME
+---------- --------------------------------------------------
+LNAME                                                     AGE DOB
+-------------------------------------------------- ---------- ---------
+PLAYINGROLE                                        TEAMID
+-------------------------------------------------- ----------
+BATTING              BOWLING              MATCH_PLAYED MATCHID
+-------------------- -------------------- ------------ ----------
+P102       krishna
+R                                                          23 02-JAN-99
+batting                                            T2
+
+
+
+PLAYERID   FNAME
+---------- --------------------------------------------------
+LNAME                                                     AGE DOB
+-------------------------------------------------- ---------- ---------
+PLAYINGROLE                                        TEAMID
+-------------------------------------------------- ----------
+BATTING              BOWLING              MATCH_PLAYED MATCHID
+-------------------- -------------------- ------------ ----------
+P103       amar
+J                                                          21 26-SEP-99
+wicketkeeper                                       T3
+ DECLARE
+  2  v_playerid  player.playerid%TYPE := 'p104';
+  3  v_fname     player.fname%TYPE    := 'Rohit';
+  4  v_lname     player.lname%TYPE    := 'S';
+  5  v_age       player.age%TYPE      := 20;
+  6  v_dob       player.dob%TYPE      := TO_DATE('16-AUG-2005', 'DD-MON-YYYY');
+  7  v_playingrole      player.playingrole%TYPE     := 'batting';
+  8  BEGIN
+  9  INSERT INTO player (playerid, fname, lname, age, dob, playingrole)
+ 10  VALUES (v_playerid, v_fname, v_lname, v_age, v_dob, v_playingrole);
+ 11  DBMS_OUTPUT.PUT_LINE('Player record inserted successfully.');
+ 12  EXCEPTION
+ 13  WHEN OTHERS THEN
+ 14  DBMS_OUTPUT.PUT_LINE('Error inserting player: ' || SQLERRM);
+ 15  END;
+ 16  /
+
+PL/SQL procedure successfully completed.
+
+SQL> create table pmatch(playerid varchar2(25) references player(playerid), matchid varchar2(25) references match(matchid));
+
+Table created.
+
+SQL> CREATE OR REPLACE FUNCTION total_matches_played (
+  2  p_playerid IN VARCHAR2
+  3  )
+  4  RETURN NUMBER
+  5  IS
+  6  v_count NUMBER;
+  7  BEGIN
+  8  SELECT COUNT(*)
+  9  INTO v_count
+ 10  FROM pmatch
+ 11  WHERE playerid = p_playerid;
+ 12
+ 13  RETURN v_count;
+ 14
+ 15  EXCEPTION
+ 16  WHEN NO_DATA_FOUND THEN
+ 17  RETURN 0;
+ 18  WHEN OTHERS THEN
+ 19  RETURN -1;
+ 20  END total_matches_played;
+ 21  /
+
+Function created.
+SQL> select * from player;
+
+PLAYERID   FNAME
+---------- --------------------------------------------------
+LNAME                                                     AGE DOB
+-------------------------------------------------- ---------- ---------
+PLAYINGROLE                                        TEAMID
+-------------------------------------------------- ----------
+BATTING              BOWLING              MATCH_PLAYED MATCHID
+-------------------- -------------------- ------------ ----------
+P101       raj
+N                                                          20 16-JUN-05
+bowling                                            T1
+
+
+
+PLAYERID   FNAME
+---------- --------------------------------------------------
+LNAME                                                     AGE DOB
+-------------------------------------------------- ---------- ---------
+PLAYINGROLE                                        TEAMID
+-------------------------------------------------- ----------
+BATTING              BOWLING              MATCH_PLAYED MATCHID
+-------------------- -------------------- ------------ ----------
+P102       krishna
+R                                                          23 02-JAN-99
+batting                                            T2
+
+
+
+PLAYERID   FNAME
+---------- --------------------------------------------------
+LNAME                                                     AGE DOB
+-------------------------------------------------- ---------- ---------
+PLAYINGROLE                                        TEAMID
+-------------------------------------------------- ----------
+BATTING              BOWLING              MATCH_PLAYED MATCHID
+-------------------- -------------------- ------------ ----------
+P103       amar
+J                                                          21 26-SEP-99
+wicketkeeper                                       T3
+
+
+
+PLAYERID   FNAME
+---------- --------------------------------------------------
+LNAME                                                     AGE DOB
+-------------------------------------------------- ---------- ---------
+PLAYINGROLE                                        TEAMID
+-------------------------------------------------- ----------
+BATTING              BOWLING              MATCH_PLAYED MATCHID
+-------------------- -------------------- ------------ ----------
+p104       Rohit
+S                                                          20 16-AUG-05
+batting
+
+
+
+SQL> select * from match;
+
+MATCHID    LOCATION                                           UMPIREID
+---------- -------------------------------------------------- ----------
+RESULT     TEAMID     PLAYERID
+---------- ---------- ----------
+M501       mumbai                                             U1
+2
+
+M502       bengulur                                           U2
+2
+ commit;
+
+Commit complete.

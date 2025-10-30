@@ -1,0 +1,141 @@
+PS C:\Users\e_sop> mongosh
+Current Mongosh Log ID: 68ec922e2feb6ed43bcebea3
+Connecting to:          mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.5.8
+Using MongoDB:          8.2.1
+Using Mongosh:          2.5.8
+
+For mongosh info see: https://www.mongodb.com/docs/mongodb-shell/
+
+
+To help improve our products, anonymous usage data is collected and sent to MongoDB periodically (https://www.mongodb.com/legal/privacy-policy).
+You can opt-out by running the disableTelemetry() command.
+
+------
+   The server generated these startup warnings when booting
+   2025-10-13T11:11:05.341+05:30: Access control is not enabled for the database. Read and write access to data and configuration is unrestricted
+------
+
+test> use VTU29922
+switched to db VTU29922
+VTU29922> db.createCollection("CricketBoard")
+{ ok: 1 }
+
+
+VTU29922> db.CricketBoard.insertOne({BoardId:"BID01", Name:"Chennai cricket board", Address:"Chennai", Phone:9566903378});
+{
+  acknowledged: true,
+  insertedId: ObjectId('68ec92bd2feb6ed43bcebea4')
+}
+
+VTU29922> db.CricketBoard.find().pretty()
+[
+  {
+    _id: ObjectId('68ec92bd2feb6ed43bcebea4'),
+    BoardId: 'BID01',
+    Name: 'Chennai cricket board',
+    Address: 'Chennai',
+    Phone: 9566903378
+  }
+]
+
+
+VTU29922> db. CricketBoard. insertMany([{BoardId:"BID02", Namessssophiya> db. CricketBoard. insertMany([{BoardId:"BID02", Name:"Tiruvallur cricket board", Address:"Chennai", Phone:9944332211},{BoardId:"BID03", Name:"Trichy cricket board", Address:"Trichy", Phone:9123456780},{BoardId:"BID04", Name:"Madurai cricket board", Address:"Madurai", Phone:9787238491}]);
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('68ec98fb2feb6ed43bcebea5'),
+    '1': ObjectId('68ec98fb2feb6ed43bcebea6'),
+    '2': ObjectId('68ec98fb2feb6ed43bcebea7')
+  }
+}
+
+VTU29922> db. CricketBoard.find()
+[
+  {
+    _id: ObjectId('68ec92bd2feb6ed43bcebea4'),
+    BoardId: 'BID01',
+    Name: 'Chennai cricket board',
+    Address: 'Chennai',
+    Phone: 9566903378
+  },
+  {
+    _id: ObjectId('68ec98fb2feb6ed43bcebea5'),
+    BoardId: 'BID02',
+    Name: 'Tiruvallur cricket board',
+    Address: 'Chennai',
+    Phone: 9944332211
+  },
+  {
+    _id: ObjectId('68ec98fb2feb6ed43bcebea6'),
+    BoardId: 'BID03',
+    Name: 'Trichy cricket board',
+    Address: 'Trichy',
+    Phone: 9123456780
+  },
+  {
+    _id: ObjectId('68ec98fb2feb6ed43bcebea7'),
+    BoardId: 'BID04',
+    Name: 'Madurai cricket board',
+    Address: 'Madurai',
+    Phone: 9787238491
+  }
+]
+VTU29922> db. CricketBoard.find().pretty()
+[
+  {
+    _id: ObjectId('68ec92bd2feb6ed43bcebea4'),
+    BoardId: 'BID01',
+    Name: 'Chennai cricket board',
+    Address: 'Chennai',
+    Phone: 9566903378
+  },
+  {
+    _id: ObjectId('68ec98fb2feb6ed43bcebea5'),
+    BoardId: 'BID02',
+    Name: 'Tiruvallur cricket board',
+    Address: 'Chennai',
+    Phone: 9944332211
+  },
+  {
+    _id: ObjectId('68ec98fb2feb6ed43bcebea6'),
+    BoardId: 'BID03',
+    Name: 'Trichy cricket board',
+    Address: 'Trichy',
+    Phone: 9123456780
+  },
+  {
+    _id: ObjectId('68ec98fb2feb6ed43bcebea7'),
+    BoardId: 'BID04',
+    Name: 'Madurai cricket board',
+    Address: 'Madurai',
+    Phone: 9787238491
+  }
+]
+
+
+VTU29922> db.CricketBoard.deleteOne({BoardId:"BID04"})
+{ acknowledged: true, deletedCount: 1 }
+VTU29922> db. CricketBoard.find().pretty()
+[
+  {
+    _id: ObjectId('68ec92bd2feb6ed43bcebea4'),
+    BoardId: 'BID01',
+    Name: 'Chennai cricket board',
+    Address: 'Chennai',
+    Phone: 9566903378
+  },
+  {
+    _id: ObjectId('68ec98fb2feb6ed43bcebea5'),
+    BoardId: 'BID02',
+    Name: 'Tiruvallur cricket board',
+    Address: 'Chennai',
+    Phone: 9944332211
+  },
+  {
+    _id: ObjectId('68ec98fb2feb6ed43bcebea6'),
+    BoardId: 'BID03',
+    Name: 'Trichy cricket board',
+    Address: 'Trichy',
+    Phone: 9123456780
+  }
+]

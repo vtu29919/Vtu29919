@@ -1,0 +1,210 @@
+
+SQL> select teamid,name,count(result) from team t LEFT JOIN match m on T.teamid = M.result group by T.teamid,T.name order by T.teamid;
+
+TEAMID
+----------
+NAME
+--------------------------------------------------------------------------------
+COUNT(RESULT)
+-------------
+T1
+MI
+            0
+
+T2
+SRH
+            0
+
+TEAMID
+----------
+NAME
+--------------------------------------------------------------------------------
+COUNT(RESULT)
+-------------
+
+T3
+RCB
+            0
+
+
+SQL> select t.name AS teamname, count(*) totaltiematches from team t JOIN match mt on t.teamid = m.teamid,where m.result = 'tie' groupby t.name;
+select t.name AS teamname, count(*) totaltiematches from team t JOIN match mt on t.teamid = m.teamid,where m.result = 'tie' groupby t.name
+                                                                                                     *
+ERROR at line 1:
+ORA-00903: invalid table name
+
+
+SQL> select t.name AS teamname, count(*) totaltiematches from team t JOIN match m on t.teamid = m.teamid,where m.result = 'tie' groupby t.name;
+select t.name AS teamname, count(*) totaltiematches from team t JOIN match m on t.teamid = m.teamid,where m.result = 'tie' groupby t.name
+                                                                                                    *
+ERROR at line 1:
+ORA-00903: invalid table name
+
+
+SQL> select t.name AS teamname, count(*) totaltiematches from team t JOIN match m on t.teamid = m.teamid join match m where m.result = 'tie' groupby t.name;
+select t.name AS teamname, count(*) totaltiematches from team t JOIN match m on t.teamid = m.teamid join match m where m.result = 'tie' groupby t.name
+                                                                                                                 *
+ERROR at line 1:
+ORA-00905: missing keyword
+
+
+SQL> select t.name AS teamname, count(*) totaltiematches from team t JOIN match m on t.teamid = m.teamid join match m  on mt.matchid=m.matchid where m.result = 'tie' groupby t.name;
+select t.name AS teamname, count(*) totaltiematches from team t JOIN match m on t.teamid = m.teamid join match m  on mt.matchid=m.matchid where m.result = 'tie' groupby t.name
+                                                                                                                                                                 *
+ERROR at line 1:
+ORA-00933: SQL command not properly ended
+
+
+SQL> select t.name AS teamname, count(*) totaltiematches from team t JOIN match m on t.teamid = m.teamid join match m  on mt.matchid=m.matchid where m.result = 'tie' group by t.name;
+select t.name AS teamname, count(*) totaltiematches from team t JOIN match m on t.teamid = m.teamid join match m  on mt.matchid=m.matchid where m.result = 'tie' group by t.name
+                                                                                           *
+ERROR at line 1:
+ORA-00904: "M"."TEAMID": invalid identifier
+
+
+SQL> select t.name AS teamname, count(*) totaltiematches from team t JOIN match m on t.teamid = m.matchid join match m  on mt.matchid=m.matchid where m.result = 'tie' group by t.name;
+select t.name AS teamname, count(*) totaltiematches from team t JOIN match m on t.teamid = m.matchid join match m  on mt.matchid=m.matchid where m.result = 'tie' group by t.name
+                                                                                                                      *
+ERROR at line 1:
+ORA-00904: "MT"."MATCHID": invalid identifier
+
+
+SQL> select t.name AS teamname, count(*) totaltiematches from team t JOIN match m  on mt.matchid=m.matchid where m.result = 'tie' group by t.name;
+select t.name AS teamname, count(*) totaltiematches from team t JOIN match m  on mt.matchid=m.matchid where m.result = 'tie' group by t.name
+                                                                                 *
+ERROR at line 1:
+ORA-00904: "MT"."MATCHID": invalid identifier
+
+
+SQL> alter table match add(teamid varchar(10) FOREIGNKEY (teamid) REFERENCES team(teamid));
+alter table match add(teamid varchar(10) FOREIGNKEY (teamid) REFERENCES team(teamid))
+                                         *
+ERROR at line 1:
+ORA-00907: missing right parenthesis
+
+
+SQL> alter table match add(teamid varchar(10) FOREIGN KEY (teamid) REFERENCES team(teamid));
+alter table match add(teamid varchar(10) FOREIGN KEY (teamid) REFERENCES team(teamid))
+                                         *
+ERROR at line 1:
+ORA-00907: missing right parenthesis
+
+
+SQL> alter table match add(teamid varchar(10),FOREIGN KEY (teamid) REFERENCES team(teamid));
+
+Table altered.
+
+SQL> select t.name AS teamname, count(*) totaltiematches from team t JOIN match m on t.teamid = m.teamid where m.result = 'tie' group by t.name;
+
+no rows selected
+
+SQL> alter table player add(no.of matches played int );
+alter table player add(no.of matches played int )
+                         *
+ERROR at line 1:
+ORA-01748: only simple column names allowed here
+
+
+SQL> alter table player add(match_played int );
+
+Table altered.
+
+SQL> select playerid,name max(match_played) from player;
+select playerid,name max(match_played) from player
+                        *
+ERROR at line 1:
+ORA-00923: FROM keyword not found where expected
+
+
+SQL> select playerid,name,max(match_played) from player;
+select playerid,name,max(match_played) from player
+                *
+ERROR at line 1:
+ORA-00904: "NAME": invalid identifier
+
+
+SQL> select playerid,Fname,Lname,max(match_played) from player;
+select playerid,Fname,Lname,max(match_played) from player
+       *
+ERROR at line 1:
+ORA-00937: not a single-group group function
+
+
+SQL> select p.playerid,p.Fname,p.Lname as playername,p.age,m.matchid from player p,match m where p.player in(select playerid from player where age<30);
+select p.playerid,p.Fname,p.Lname as playername,p.age,m.matchid from player p,match m where p.player in(select playerid from player where age<30)
+                                                                                            *
+ERROR at line 1:
+ORA-00904: "P"."PLAYER": invalid identifier
+
+
+SQL> select p.playerid,p.Fname,p.Lname as playername,p.age,m.matchid from player p,match m where p.playerid in(select playerid from player where age<30);
+
+PLAYERID   FNAME
+---------- --------------------------------------------------
+PLAYERNAME                                                AGE MATCHID
+-------------------------------------------------- ---------- ----------
+P101       raj
+N                                                          20 M501
+
+P102       krishna
+R                                                          23 M501
+
+P103       amar
+J                                                          21 M501
+
+
+PLAYERID   FNAME
+---------- --------------------------------------------------
+PLAYERNAME                                                AGE MATCHID
+-------------------------------------------------- ---------- ----------
+P101       raj
+N                                                          20 M502
+
+P102       krishna
+R                                                          23 M502
+
+P103       amar
+J                                                          21 M502
+
+
+6 rows selected.
+
+SQL> select p.playerid,p.Fname as playername,p.age,m.matchid from player p,match m where p.playerid in(select playerid from player where age<30);
+
+PLAYERID   PLAYERNAME                                                AGE
+---------- -------------------------------------------------- ----------
+MATCHID
+----------
+P101       raj                                                        20
+M501
+
+P102       krishna                                                    23
+M501
+
+P103       amar                                                       21
+M501
+
+
+PLAYERID   PLAYERNAME                                                AGE
+---------- -------------------------------------------------- ----------
+MATCHID
+----------
+P101       raj                                                        20
+M502
+
+P102       krishna                                                    23
+M502
+
+P103       amar                                                       21
+M502
+
+
+6 rows selected.
+
+SQL> commit
+  2
+SQL> commit;
+
+Commit complete.
+
+SQL>

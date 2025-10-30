@@ -1,0 +1,125 @@
+ create trigger trg_update_total_matches after insert on match for each row begin update player set total matches played=nvl(total matches played,0)+1 where playerid=new.playerid; exception when others then DBMS_OUTPUT.PUT_LINE("error in trigger:|| sqlerrm);
+  2  END;
+  3  /
+ create trigger trg_update_total_matches after insert on match for each row begin update player set total matches played=nvl(total matches played,0)+1 where playerid=new.playerid; exception when others then DBMS_OUTPUT.PUT_LINE("error in trigger:|| sqlerrm);
+                *
+ERROR at line 1:
+ORA-04081: trigger 'TRG_UPDATE_TOTAL_MATCHES' already exists
+
+
+SQL> alter table player add(matchid varchar(10),FOREIGN KEY (matchid) references match(matchid);
+alter table player add(matchid varchar(10),FOREIGN KEY (matchid) references match(matchid)
+                                                                                         *
+ERROR at line 1:
+ORA-00907: missing right parenthesis
+
+
+SQL> alter table player add(matchid varchar(10),FOREIGN KEY (matchid) references match(matchid));
+
+Table altered.
+
+SQL> select * from player;
+
+PLAYERID   FNAME
+---------- --------------------------------------------------
+LNAME                                                     AGE DOB
+-------------------------------------------------- ---------- ---------
+PLAYINGROLE                                        TEAMID
+-------------------------------------------------- ----------
+BATTING              BOWLING              MATCH_PLAYED MATCHID
+-------------------- -------------------- ------------ ----------
+P101       raj
+N                                                          20 16-JUN-05
+bowling                                            T1
+
+
+
+PLAYERID   FNAME
+---------- --------------------------------------------------
+LNAME                                                     AGE DOB
+-------------------------------------------------- ---------- ---------
+PLAYINGROLE                                        TEAMID
+-------------------------------------------------- ----------
+BATTING              BOWLING              MATCH_PLAYED MATCHID
+-------------------- -------------------- ------------ ----------
+P102       krishna
+R                                                          23 02-JAN-99
+batting                                            T2
+
+
+
+PLAYERID   FNAME
+---------- --------------------------------------------------
+LNAME                                                     AGE DOB
+-------------------------------------------------- ---------- ---------
+PLAYINGROLE                                        TEAMID
+-------------------------------------------------- ----------
+BATTING              BOWLING              MATCH_PLAYED MATCHID
+-------------------- -------------------- ------------ ----------
+P103       amar
+J                                                          21 26-SEP-99
+wicketkeeper                                       T3
+create view vw_player_matches as select p.playerid,p.Fname,p.match_played,count(m.matchid)
+  2  FROM player p
+  3  LEFT JOIN match m
+  4  ON p.playerid = m. playerid
+  5  group by p.playerid,p.Fname,p.match_played
+  6  /
+ON p.playerid = m. playerid
+                *
+ERROR at line 4:
+ORA-00904: "M"."PLAYERID": invalid identifier
+
+
+SQL> select * from match;
+
+MATCHID    LOCATION                                           UMPIREID
+---------- -------------------------------------------------- ----------
+RESULT     TEAMID
+---------- ----------
+M501       mumbai                                             U1
+2
+
+M502       bengulur                                           U2
+2
+
+
+SQL> alter table match add(playerid varchar(10),FOREIGN KEY (playerid) references player(playerid));
+
+Table altered.
+
+SQL> create view vw_player_matches as select p.playerid,p.Fname,p.match_played,count(m.matchid)
+  2  FROM player p
+  3  LEFT JOIN match m
+  4  ON p.playerid = m. playerid
+  5  group by p.playerid,p.Fname,p.match_played
+  6  /
+create view vw_player_matches as select p.playerid,p.Fname,p.match_played,count(m.matchid)
+                                                                          *
+ERROR at line 1:
+ORA-00998: must name this expression with a column alias
+
+
+SQL> create view vw_player_matches as select p.playerid,p.Fname,p.match_played,count(m.matchid) AS match_count
+  2  FROM player p
+  3  LEFT JOIN match m
+  4  ON p.playerid = m. playerid
+  5  group by p.playerid,p.Fname,p.match_played
+  6  /
+
+View created.
+
+SQL> commit;
+
+Commit complete. set serveroutput ON;
+SQL> DECLARE
+  2      total_age number :=0;
+  3      num_players NUMBER :=0;
+  4      avg_age NUMBER :=0;
+  5  BEGIN
+  6      FOR plyaer_rec IN (SELECT Age FROM player) LOOP
+  7          total age :=total_age + player_rec.Age; - summing up to ages
+  8          num_player := num_player + 1; - coumting the number of players
+  9      END LOOP;
+ 10
+ 11      IF num_player
