@@ -1,0 +1,234 @@
+ create table cricketboard(BoardID varchar(10) PRIMARY KEY,Name varchar(100) NOT NULL,Address varchar(25),contact_no number(10));
+
+Table created.
+
+SQL> create table Team(TeamID varchar(10) PRIMARY KEY,Name varchar(100) NOT NOLL,Coach varchar(100),Captain varchar(100));
+create table Team(TeamID varchar(10) PRIMARY KEY,Name varchar(100) NOT NOLL,Coach varchar(100),Captain varchar(100))
+                                                                       *
+ERROR at line 1:
+ORA-00905: missing keyword
+
+
+SQL> create table Team(TeamID varchar(10) PRIMARY KEY,Name varchar(100) NOT NULL,Coach varchar(100),Captain varchar(100));
+
+Table created.
+
+SQL> create table player(playerid varchar(10) PRIMARY KEY,FName varchar(50) NOT NULL,lName varchar(50) NOT NULL,Age int,dob DATE,playingrole varchar(50),TeamID varchar(10),FOREIGN KEY (TeamID)REFERENCE team(TeamID));
+create table player(playerid varchar(10) PRIMARY KEY,FName varchar(50) NOT NULL,lName varchar(50) NOT NULL,Age int,dob DATE,playingrole varchar(50),TeamID varchar(10),FOREIGN KEY (TeamID)REFERENCE team(TeamID))
+                                                                                                                                                                                           *
+ERROR at line 1:
+ORA-00905: missing keyword
+
+
+SQL> create table player(playerid varchar(10) PRIMARY KEY,FName varchar(50) NOT NULL,lName varchar(50) NOT NULL,Age int,dob DATE,playingrole varchar(50),TeamID varchar(10),FOREIGN KEY (TeamID) REFERENCE team(TeamID));
+create table player(playerid varchar(10) PRIMARY KEY,FName varchar(50) NOT NULL,lName varchar(50) NOT NULL,Age int,dob DATE,playingrole varchar(50),TeamID varchar(10),FOREIGN KEY (TeamID) REFERENCE team(TeamID))
+                                                                                                                                                                                            *
+ERROR at line 1:
+ORA-00905: missing keyword
+
+
+SQL> create table player(playerid varchar(10) PRIMARY KEY,FName varchar(50) NOT NULL,lName varchar(50) NOT NULL,Age int,dob DATE,playingrole varchar(50),TeamID varchar(10),FOREIGN KEY (TeamID) REFERENCES team(TeamID));
+
+Table created.
+
+SQL> create table ground(groundid varchar(10) PRIMARY KEY,name varchar(100) NOT NULL,Location varchar(100),capacity int);
+
+Table created.
+
+SQL> create table match(matchid varchar(10) PRIMARY KEY,date DATE NOT NULL,time TIME NOT NULL,result varchar(255),groundid varchar(10),FOREIGN KEY (groundid) REFERENCES ground(groundid));
+create table match(matchid varchar(10) PRIMARY KEY,date DATE NOT NULL,time TIME NOT NULL,result varchar(255),groundid varchar(10),FOREIGN KEY (groundid) REFERENCES ground(groundid))
+                                                   *
+ERROR at line 1:
+ORA-00904: : invalid identifier
+
+
+SQL> create table match(matchid varchar(10) PRIMARY KEY,date DATE(DD-MM-YYYY) NOT NULL,time TIME NOT NULL,result varchar(255),groundid varchar(10),FOREIGN KEY (groundid) REFERENCES ground(groundid));
+create table match(matchid varchar(10) PRIMARY KEY,date DATE(DD-MM-YYYY) NOT NULL,time TIME NOT NULL,result varchar(255),groundid varchar(10),FOREIGN KEY (groundid) REFERENCES ground(groundid))
+                                                   *
+ERROR at line 1:
+ORA-00904: : invalid identifier
+
+
+SQL> create table match(matchid varchar(10) PRIMARY KEY,Date DATE(DD-MM-YYYY) NOT NULL,time TIME NOT NULL,result varchar(255),groundid varchar(10),FOREIGN KEY (groundid) REFERENCES ground(groundid));
+create table match(matchid varchar(10) PRIMARY KEY,Date DATE(DD-MM-YYYY) NOT NULL,time TIME NOT NULL,result varchar(255),groundid varchar(10),FOREIGN KEY (groundid) REFERENCES ground(groundid))
+                                                   *
+ERROR at line 1:
+ORA-00904: : invalid identifier
+
+
+SQL> create table match(matchid varchar(10) PRIMARY KEY,Date DATE(DD-MM-YYYY) NOT NULL,time TIME NOT NULL,result varchar(255),groundid varchar(10),FOREIGN KEY (groundid) REFERENCES ground(groundid));
+create table match(matchid varchar(10) PRIMARY KEY,Date DATE(DD-MM-YYYY) NOT NULL,time TIME NOT NULL,result varchar(255),groundid varchar(10),FOREIGN KEY (groundid) REFERENCES ground(groundid))
+                                                   *
+ERROR at line 1:
+ORA-00904: : invalid identifier
+
+
+SQL> create table match(matchid varchar2(10) PRIMARY KEY,Location varchar2(50),umpireid varchar2(10));
+
+Table created.
+
+SQL> create table umpire(umpireid varchar(10) PRIMARY KEY,FName varchar(50) NOT NULL,LName varchar(50) NOT NULL,Age int,dob DATE,Country varchar(50));
+
+Table created.
+
+SQL> desc crickerboard;
+ERROR:
+ORA-04043: object crickerboard does not exist
+
+
+SQL> desc cricketboard;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ BOARDID                                   NOT NULL VARCHAR2(10)
+ NAME                                      NOT NULL VARCHAR2(100)
+ ADDRESS                                            VARCHAR2(25)
+ CONTACT_NO                                         NUMBER(10)
+
+SQL> desc Team;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ TEAMID                                    NOT NULL VARCHAR2(10)
+ NAME                                      NOT NULL VARCHAR2(100)
+ COACH                                              VARCHAR2(100)
+ CAPTAIN                                            VARCHAR2(100)
+
+SQL> desc player;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ PLAYERID                                  NOT NULL VARCHAR2(10)
+ FNAME                                     NOT NULL VARCHAR2(50)
+ LNAME                                     NOT NULL VARCHAR2(50)
+ AGE                                                NUMBER(38)
+ DOB                                                DATE
+ PLAYINGROLE                                        VARCHAR2(50)
+ TEAMID                                             VARCHAR2(10)
+
+SQL> desc ground;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ GROUNDID                                  NOT NULL VARCHAR2(10)
+ NAME                                      NOT NULL VARCHAR2(100)
+ LOCATION                                           VARCHAR2(100)
+ CAPACITY                                           NUMBER(38)
+
+SQL> desc match;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ MATCHID                                   NOT NULL VARCHAR2(10)
+ LOCATION                                           VARCHAR2(50)
+ UMPIREID                                           VARCHAR2(10)
+
+SQL> desc umpire;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ UMPIREID                                  NOT NULL VARCHAR2(10)
+ FNAME                                     NOT NULL VARCHAR2(50)
+ LNAME                                     NOT NULL VARCHAR2(50)
+ AGE                                                NUMBER(38)
+ DOB                                                DATE
+ COUNTRY                                            VARCHAR2(50)
+
+SQL> insert into cricketboard values('&boardid','&name','&address','&contact_no'));
+Enter value for boardid: B1
+Enter value for name: ajay
+Enter value for address: chennai
+Enter value for contact_no: 1234567890
+old   1: insert into cricketboard values('&boardid','&name','&address','&contact_no'))
+new   1: insert into cricketboard values('B1','ajay','chennai','1234567890'))
+insert into cricketboard values('B1','ajay','chennai','1234567890'))
+                                                                   *
+ERROR at line 1:
+ORA-00933: SQL command not properly ended
+
+
+SQL> insert into cricketboard values('&boardid','&name','&address','&contact_no'));
+Enter value for boardid: B1
+Enter value for name: ajay
+Enter value for address: chennai
+Enter value for contact_no: 8688431831
+old   1: insert into cricketboard values('&boardid','&name','&address','&contact_no'))
+new   1: insert into cricketboard values('B1','ajay','chennai','8688431831'))
+insert into cricketboard values('B1','ajay','chennai','8688431831'))
+                                                                   *
+ERROR at line 1:
+ORA-00933: SQL command not properly ended
+
+
+SQL> insert into cricketboard values('&boardid','&name','&address',&contact_no));
+Enter value for boardid: B1
+Enter value for name: chennaiboard
+Enter value for address: chennai
+Enter value for contact_no: 8688431831
+old   1: insert into cricketboard values('&boardid','&name','&address',&contact_no))
+new   1: insert into cricketboard values('B1','chennaiboard','chennai',8688431831))
+insert into cricketboard values('B1','chennaiboard','chennai',8688431831))
+                                                                         *
+ERROR at line 1:
+ORA-00933: SQL command not properly ended
+
+
+SQL> insert into cricketboard values('&boardid','&name','&address',&contact_no);
+Enter value for boardid: B1
+Enter value for name: chennaiboard
+Enter value for address: chennai
+Enter value for contact_no: 8688431831
+old   1: insert into cricketboard values('&boardid','&name','&address',&contact_no)
+new   1: insert into cricketboard values('B1','chennaiboard','chennai',8688431831)
+
+1 row created.
+
+SQL> insert into cricketboard values('&boardid','&name','&address',&contact_no);
+Enter value for boardid: B2
+Enter value for name: hydboard
+Enter value for address: hyderabad
+Enter value for contact_no: 7989555059
+old   1: insert into cricketboard values('&boardid','&name','&address',&contact_no)
+new   1: insert into cricketboard values('B2','hydboard','hyderabad',7989555059)
+
+1 row created.
+
+SQL> insert into cricketboard values('&boardid','&name','&address',&contact_no);
+Enter value for boardid: B3
+Enter value for name: karnatakaboard
+Enter value for address: bengulur
+Enter value for contact_no: 6303498245
+old   1: insert into cricketboard values('&boardid','&name','&address',&contact_no)
+new   1: insert into cricketboard values('B3','karnatakaboard','bengulur',6303498245)
+
+1 row created.
+
+SQL> insert into Team values('&TeamID','&Name','&coach','&captain');
+Enter value for teamid: T1
+Enter value for name: MI
+Enter value for coach: chinnu
+Enter value for captain: rohith
+old   1: insert into Team values('&TeamID','&Name','&coach','&captain')
+new   1: insert into Team values('T1','MI','chinnu','rohith')
+
+1 row created.
+
+SQL> insert into Team values('&TeamID','&Name','&coach','&captain');
+Enter value for teamid: T2
+Enter value for name: SRH
+Enter value for coach: ajay
+Enter value for captain: nithish
+old   1: insert into Team values('&TeamID','&Name','&coach','&captain')
+new   1: insert into Team values('T2','SRH','ajay','nithish')
+
+1 row created.
+
+SQL> insert into Team values('&TeamID','&Name','&coach','&captain');
+Enter value for teamid: T3
+Enter value for name: RCB
+Enter value for coach: ram
+Enter value for captain: VIRAT
+old   1: insert into Team values('&TeamID','&Name','&coach','&captain')
+new   1: insert into Team values('T3','RCB','ram','VIRAT')
+
+1 row created.
+
+SQL> commit;
+
+Commit complete.
+
+SQL>
